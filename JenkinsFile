@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout'){
+            echo 'Grabbing source code..'
+            steps {
+                git credentialsId: 'preston-aoki', url 'https://github.com/preston-aoki/testDemo.git', branch: 'master'
+            }
+        }
+
+        stage('Setup'){
+            steps {
+                echo 'Restoring Nuget packages'
+                sh "dotnet restore"
+
+                echo 'Cleaning solution'
+                sh "dotnet clean"
+            }
+        }
+
+        stage('Build'){
+            echo 'Building..'
+            sh "dotnet build --configuration Release"
+        }
+
+        stage('Test'){
+            echo 'Testing..'
+            sh "dotnet test"
+        }
+
+        stage('Publish'){
+            echo 'Deploying..'
+        }
+
+    }
+}

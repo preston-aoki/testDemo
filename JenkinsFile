@@ -12,7 +12,10 @@ pipeline {
         stage('Setup'){
             steps {
                 echo 'Setting up environment...'
-                sh "source /opt/rh/rh-dotnet31/enable"
+                sh '''
+                    source /opt/rh/rh-dotnet31/enable"
+                    dotnet restore
+                '''
 
                 echo 'Restoring Nuget packages'
                 sh "dotnet restore"

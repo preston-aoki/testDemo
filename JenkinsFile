@@ -1,11 +1,15 @@
 pipeline {
     agent any
 
+    parameters {
+        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'main', name: 'BRANCH', type 'PT_BRANCH'
+    }
+
     stages {
         stage('Checkout'){
             echo 'Grabbing source code..'
             steps {
-                git credentialsId: 'preston-aoki', url 'https://github.com/preston-aoki/testDemo.git', branch: 'master'
+                git branch: "${params.BRANCH}", url: 'https://github.com/preston-aoki/testDemo.git'
             }
         }
 

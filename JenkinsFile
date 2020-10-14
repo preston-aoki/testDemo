@@ -1,15 +1,11 @@
 pipeline {
     agent any
 
-    parameters {
-        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'main', name: 'BRANCH', type 'PT_BRANCH'
-    }
-
     stages {
         stage('Checkout'){
-            echo 'Grabbing source code..'
             steps {
-                git branch: "${params.BRANCH}", url: 'https://github.com/preston-aoki/testDemo.git'
+                echo 'Grabbing source code..'
+                git branch: 'main', credentialsId: 'github-demo-user', poll: false, url: 'https://github.com/preston-aoki/testDemo.git'
             }
         }
 
@@ -24,18 +20,24 @@ pipeline {
         }
 
         stage('Build'){
-            echo 'Building..'
-            sh "dotnet build --configuration Release"
+            steps{
+                echo 'Building..'
+                sh "dotnet build --configuration Release"
+            }
         }
 
         stage('Test'){
-            echo 'Testing..'
-            sh "dotnet test"
+            steps{
+                echo 'Testing..'
+                sh "dotnet test"
+            }
         }
 
         stage('Publish'){
-            echo 'Deploying..'
+            steps{
+                echo 'Deploying..'
+            }
         }
-
+    
     }
 }

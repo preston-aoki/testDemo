@@ -12,6 +12,7 @@ pipeline {
         stage('Setup'){
             steps {
                 echo 'Setting up environment...'
+                sh "ls -al opt/rh/devtoolset*"
                 sh "source scl_source enable rh-dotnet31"
 
                 echo 'Restoring Nuget packages'

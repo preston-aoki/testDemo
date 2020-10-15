@@ -1,6 +1,8 @@
 pipeline {
     agent any
 
+
+
     stages {
         stage('Checkout'){
             steps {
@@ -14,13 +16,13 @@ pipeline {
                 echo 'Restoring Nuget packages...'
                 sh '''
                     source /opt/rh/rh-dotnet31/enable
-                    dotnet restore .\GitHubDemo\
+                    dotnet restore GitHubDemo/
                 '''
 
                 echo 'Cleaning solution...'
                 sh '''
                     source /opt/rh/rh-dotnet31/enable
-                    dotnet clean .\GitHubDemo\
+                    dotnet clean GitHubDemo/
                 '''
             }
         }
@@ -30,7 +32,7 @@ pipeline {
                 echo 'Building..'
                 sh '''
                     source /opt/rh/rh-dotnet31/enable
-                    dotnet build .\GitHubDemo\ --configuration Release
+                    dotnet build GitHubDemo/ --configuration Release
                 '''
             }
         }
@@ -40,7 +42,7 @@ pipeline {
                 echo 'Testing..'
                 sh '''
                     source /opt/rh/rh-dotnet31/enable
-                    dotnet test .\GitHubDemo\
+                    dotnet test GitHubDemo/
                 '''
             }
         }

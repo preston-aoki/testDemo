@@ -21,7 +21,7 @@ pipeline {
 
                 echo 'Cleaning solution...'
                 sh '''
-                    source /opt/rh/rh-dotnet31/enable
+                    source /opt/rh/rh-dotnet31/enable > /dev/null
                     dotnet clean GitHubDemo/
                 '''
             }
@@ -31,7 +31,7 @@ pipeline {
             steps{
                 echo 'Building..'
                 sh '''
-                    source /opt/rh/rh-dotnet31/enable
+                    source /opt/rh/rh-dotnet31/enable > /dev/null
                     dotnet build GitHubDemo/ --configuration Release
                 '''
             }
@@ -41,7 +41,7 @@ pipeline {
             steps{
                 echo 'Testing..'
                 sh '''
-                    source /opt/rh/rh-dotnet31/enable
+                    source /opt/rh/rh-dotnet31/enable > /dev/null
                     dotnet test GitHubDemo/
                 '''
             }

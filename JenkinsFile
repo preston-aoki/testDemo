@@ -14,7 +14,8 @@ pipeline {
                 echo 'Setting up environment...'
                 sh '''
                     source /opt/rh/rh-dotnet31/enable
-                    dotnet restore
+                    ls -al
+                    dotnet build --configuration Release
                 '''
 
                 echo 'Restoring Nuget packages'
@@ -22,13 +23,6 @@ pipeline {
 
                 echo 'Cleaning solution'
                 sh "dotnet clean"
-            }
-        }
-
-        stage('Build'){
-            steps{
-                echo 'Building..'
-                sh "dotnet build --configuration Release"
             }
         }
 

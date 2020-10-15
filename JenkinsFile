@@ -11,25 +11,37 @@ pipeline {
 
         stage('Setup'){
             steps {
-                echo 'Setting up environment...'
+                echo 'Restoring Nuget packages...'
                 sh '''
                     source /opt/rh/rh-dotnet31/enable
-                    ls -al
-                    dotnet build --configuration Release
+                    dotnet restore .\GitHubDemo\
                 '''
 
-                echo 'Restoring Nuget packages'
-                sh "dotnet restore"
+                echo 'Cleaning solution...'
+                sh '''
+                    source /opt/rh/rh-dotnet31/enable
+                    dotnet clean .\GitHubDemo\
+                '''
+            }
+        }
 
-                echo 'Cleaning solution'
-                sh "dotnet clean"
+        stage('Build'){
+            steps{
+                echo 'Building..'
+                sh '''
+                    source /opt/rh/rh-dotnet31/enable
+                    dotnet build .\GitHubDemo\ --configuration Release
+                '''
             }
         }
 
         stage('Test'){
             steps{
                 echo 'Testing..'
-                sh "dotnet test"
+                sh '''
+                    source /opt/rh/rh-dotnet31/enable
+                    dotnet test .\GitHubDemo\
+                '''
             }
         }
 
